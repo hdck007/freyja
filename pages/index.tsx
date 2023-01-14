@@ -1,22 +1,18 @@
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import Layout from "../components/Layout";
-import autoAnimate from '@formkit/auto-animate'
-
-const theArray = new Array(10).fill(0).map((_, index) => ({
-  name: index,
-  id: "bkjbdsjkf" + index + Math.random(),
-}));
+import autoAnimate from "@formkit/auto-animate";
+import AddOptionItem from "../components/AddOptionItem";
 
 const IndexPage = () => {
   const sourceItem = useRef<null | number>(null);
   const destinationItem = useRef<null | number>(null);
-  const [itemArray, setItemsArray] = useState(theArray);
-  const container = useRef(null)
+  const [itemArray, setItemsArray] = useState<{name: string, id: string}[]>([]);
+  const container = useRef(null);
 
   useEffect(() => {
-    container.current && autoAnimate(container.current)
-  }, [container])
+    container.current && autoAnimate(container.current);
+  }, [container]);
 
   const handleChange = () => {
     let newItemArray = [...itemArray];
@@ -39,7 +35,7 @@ const IndexPage = () => {
   const handleDrag = (event) => {
     console.log("yhis");
     (event.target as HTMLDivElement).style.opacity = "0";
-  }
+  };
 
   const handleDragEnd = (event: React.DragEvent<HTMLDivElement>) => {
     console.log("drag end called here");
@@ -48,19 +44,18 @@ const IndexPage = () => {
     destinationItem.current = null;
   };
 
-  const handleDragEnter =
-    (index: number) => (event) => {
-      console.log("called", index)
-      if(sourceItem.current !== index) {
-        console.log("this happens", index);
-        destinationItem.current = index;
-        handleChange();
-      }
-    };
+  const handleDragEnter = (index: number) => (event) => {
+    console.log("called", index);
+    if (sourceItem.current !== index) {
+      console.log("this happens", index);
+      destinationItem.current = index;
+      handleChange();
+    }
+  };
 
   const preventDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
-  }
+  };
 
   return (
     <Layout title="Home | Next.js + TypeScript Example">
@@ -80,6 +75,12 @@ const IndexPage = () => {
               {item.name}
             </div>
           ))}
+          <div>
+            {itemArray.length < 5 &&
+              new Array(5 - (itemArray.length % 5))
+                .fill(0)
+                .map(() => <AddOptionItem setItemsArray={setItemsArray} />)}
+          </div>
         </div>
         <div className="w-[45%]">
           {itemArray.slice(5).map((item, index) => (
@@ -87,15 +88,27 @@ const IndexPage = () => {
               key={item.id}
               draggable
               className={`bg-blue-200 w-full p-2 m-4 cursor-move transition-all`}
-              onDragStart={handleDragStart(index+5)}
+              onDragStart={handleDragStart(index + 5)}
               onDragOver={preventDragOver}
               onDragEnd={handleDragEnd}
-              onDragEnter={handleDragEnter(index+5)}
+              onDragEnter={handleDragEnter(index + 5)}
               onDrag={handleDrag}
             >
               {item.name}
             </div>
           ))}
+          <div>
+            {itemArray.length <= 5 && new Array(5)
+              .fill(0)
+              .map(() => <AddOptionItem setItemsArray={setItemsArray} />)
+            }
+          </div>
+          <div>
+            {itemArray.length > 5 && itemArray.length%10 !== 0 &&
+              new Array(10 - (itemArray.length % 10))
+                .fill(0)
+                .map(() => <AddOptionItem setItemsArray={setItemsArray} />)}
+          </div>
         </div>
       </div>
     </Layout>
