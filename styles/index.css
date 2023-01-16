@@ -1,3 +1,111 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.container {
+    position: relative;
+    padding-left: 2rem;
+    font-weight: bold;
+    line-height: 1.6;
+}
+
+.hero{
+    width: 50%;
+    margin: 20px auto 40px auto;
+    font-size: 3rem;
+    line-height: 1.1;
+    font-weight: bold;
+}
+
+.hero > span {
+    margin: auto;
+    color: blue;
+    font-size: 10rem;
+    font-weight: bold;
+    line-height: 0.9;
+}
+
+.line1{
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.line2{
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.line3{
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+
+.line4, .line5{
+    font-size: 0.5rem;
+}
+
+.line5 > div{
+    display: inline-block;
+    height: 10px;
+    width: 250px;
+    background-color: black;
+}
+
+.big-box{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    transform: rotate(-12deg);
+    top: 30%;
+    outline: red solid 10px;
+}
+
+.circle{
+    position: absolute;
+    border-radius: 1000px;
+    width: 50px;
+    height: 50px;
+    transform: rotate(-12deg);
+    top: 50%;
+    right: 100px;
+    outline: orange solid 10px;
+    filter: blur(3px);
+}
+
+.med-box{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 15%;
+    right: 10px;
+    outline: pink solid 10px;
+}
+
+.sqaure{
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    top: 0;
+    right: 20%;
+    background-color: pink;
+}
+
+.small-box{
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    top: 5%;
+    left: 20%;
+    transform: rotate(-20deg);
+    outline: blue solid 10px;
+}
+
+.small-sqaure{
+    position: absolute;
+    height: 5px;
+    width: 5px;
+    transform: rotate(45deg);
+    background-color: blue;
+    top: 35%;
+    right: 25%;
+}

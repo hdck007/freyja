@@ -7,7 +7,7 @@ import AddOptionItem from "../components/AddOptionItem";
 const IndexPage = () => {
   const sourceItem = useRef<null | number>(null);
   const destinationItem = useRef<null | number>(null);
-  const [itemArray, setItemsArray] = useState<{name: string, id: string}[]>([]);
+  const [itemArray, setItemsArray] = useState<{name: string, id: stringp}[]>([]);
   const container = useRef(null);
 
   useEffect(() => {
