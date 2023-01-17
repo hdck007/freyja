@@ -21,6 +21,7 @@ const AddOptionItem = ({
   setItemsArray,
   itemArray,
   setError,
+  setLoading,
 }: {
   setItemsArray: React.Dispatch<
     React.SetStateAction<
@@ -36,10 +37,12 @@ const AddOptionItem = ({
     id: string;
   }[];
   setError: React.Dispatch<React.SetStateAction<boolean>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [showInput, setShowInput] = useState(false);
 
   const handleChange = async (newValue: { value: string; label: string }) => {
+    setLoading(true);
     const newArray = await fetch("/api/skills/create", {
       method: "POST",
       body: JSON.stringify({
@@ -59,9 +62,11 @@ const AddOptionItem = ({
         }
       })
       .catch((error) => {
+        setLoading(false);
         console.log(error);
         setError(true);
       });
+    setLoading(false);
     setItemsArray(newArray);
   };
 

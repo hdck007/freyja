@@ -3,6 +3,7 @@ import AddOptionItem from "./AddOptionItem";
 
 const ListWrapper = ({ setError }) => {
   const sourceItem = useRef<null | number>(null);
+  const [loading, setLoading] = useState(false);
   const destinationItem = useRef<null | number>(null);
   const [itemArray, setItemsArray] = useState<{ name: string; id: string }[]>(
     []
@@ -83,6 +84,7 @@ const ListWrapper = ({ setError }) => {
   const handleRemoveItem = (index) => async () => {
     const newItemArray = [...itemArray];
     newItemArray.splice(index, 1);
+    setLoading(true);
     const newArray = await fetch("/api/skills/create", {
       method: "POST",
       body: JSON.stringify({
@@ -97,6 +99,7 @@ const ListWrapper = ({ setError }) => {
           id: item,
         }))
       );
+    setLoading(false);
     setItemsArray(newArray);
   };
 
@@ -105,6 +108,7 @@ const ListWrapper = ({ setError }) => {
   };
   return (
     <div className="flex w-2/3 mx-auto justify-around items-center flex-wrap">
+      {loading && <div className="absolute right-5 bottom-5 animate-pulse">Loading...</div>}
       <div className="w-[45%] min-w-[200px]">
         {itemArray.slice(0, 5).map((item, index) => (
           <div
