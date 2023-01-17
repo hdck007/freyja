@@ -4,9 +4,10 @@ const prisma = new PrismaClient();
 
 const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
   try {
+    const {userId} = JSON.parse(_req.body);
     const skills = await prisma.skill.findMany({
       where: {
-        userId: _req.body.userId,
+        userId,
       },
     });
     res.status(201).json(skills);
