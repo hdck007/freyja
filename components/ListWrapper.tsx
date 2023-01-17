@@ -108,7 +108,11 @@ const ListWrapper = ({ setError }) => {
   };
   return (
     <div className="flex w-2/3 mx-auto justify-around items-center flex-wrap">
-      {loading && <div className="absolute right-5 bottom-5 animate-pulse">Loading...</div>}
+      {loading && (
+        <div className="absolute right-5 bottom-5 animate-pulse">
+          Loading...
+        </div>
+      )}
       <div className="w-[45%] min-w-[200px]">
         {itemArray.slice(0, 5).map((item, index) => (
           <div
@@ -136,6 +140,7 @@ const ListWrapper = ({ setError }) => {
               .fill(0)
               .map((_, index) => (
                 <AddOptionItem
+                  setLoading={setLoading}
                   setError={setError}
                   itemArray={itemArray}
                   enabled={index + itemArray.length === latest}
@@ -171,6 +176,7 @@ const ListWrapper = ({ setError }) => {
               .fill(0)
               .map((_, index) => (
                 <AddOptionItem
+                  setLoading={setLoading}
                   setError={setError}
                   itemArray={itemArray}
                   enabled={index + itemArray.length === latest}
@@ -185,6 +191,7 @@ const ListWrapper = ({ setError }) => {
               .fill(0)
               .map((_, index) => (
                 <AddOptionItem
+                  setLoading={setLoading}
                   itemArray={itemArray}
                   setError={setError}
                   enabled={index + itemArray.length === latest}
