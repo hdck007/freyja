@@ -44,7 +44,7 @@ const AddOptionItem = ({
       method: "POST",
       body: JSON.stringify({
         userId: localStorage.getItem("userId"),
-        skills: [...itemArray, newValue.value],
+        skills: [...itemArray.map(item => item.name), newValue.value],
       }),
     })
       .then((res) => res.json())

@@ -87,7 +87,7 @@ const ListWrapper = ({ setError }) => {
       method: "POST",
       body: JSON.stringify({
         userId: localStorage.getItem("userId"),
-        skills: [...newItemArray],
+        skills: [...newItemArray.map((item) => item.name)],
       }),
     })
       .then((res) => res.json())
