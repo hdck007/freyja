@@ -2,20 +2,6 @@ import React, { useCallback, useState } from "react";
 import AsyncSelect from "react-select/async";
 import debounce from "../utils/debounce";
 
-function wrapper(callback, inputValue) {
-  fetch(
-    `https://api.stackexchange.com/2.3/tags?order=desc&sort=popular&inname=${inputValue}&site=stackoverflow`
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      const newData = data.items.map((item) => ({
-        value: item.name,
-        label: item.name,
-      }));
-      callback(newData);
-    });
-}
-
 const AddOptionItem = ({
   enabled,
   setItemsArray,
@@ -56,10 +42,19 @@ const AddOptionItem = ({
   };
 
   const loadOptions = useCallback(
-    (inputValue: string, callback: (options: any[]) => void) => {
-      const fetchFunc = debounce(wrapper, 300);
-      fetchFunc(callback, inputValue);
-    },
+    debounce((inputValue: string, callback: (options: any[]) => void) => {
+      fetch(
+        `https://api.stackexchange.com/2.3/tags?order=desc&sort=popular&inname=${inputValue}&site=stackoverflow`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          const newData = data.items.map((item) => ({
+            value: item.name,
+            label: item.name,
+          }));
+          callback(newData);
+        });
+    }, 800),
     []
   );
 

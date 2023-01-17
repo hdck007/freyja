@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import debounce from "../utils/debounce";
 import AddOptionItem from "./AddOptionItem";
 
 const ListWrapper = ({ setError }) => {
