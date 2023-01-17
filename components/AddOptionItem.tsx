@@ -43,22 +43,29 @@ const AddOptionItem = ({
 
   const handleChange = async (newValue: { value: string; label: string }) => {
     setLoading(true);
+    setItemsArray([
+      ...itemArray,
+      {
+        name: newValue.value,
+        id: newValue.value,
+      },
+    ]);
     const newArray = await fetch("/api/skills/create", {
       method: "POST",
       body: JSON.stringify({
         userId: localStorage.getItem("userId"),
-        skills: [...itemArray.map(item => item.name), newValue.value],
+        skills: [...itemArray.map((item) => item.name), newValue.value],
       }),
     })
       .then((res) => res.json())
-      .then((data) =>{
-        if(data?.length){
+      .then((data) => {
+        if (data?.length) {
           return data.map((item) => ({
             name: item,
             id: item,
-          }))
-        }else{
-          return []
+          }));
+        } else {
+          return [];
         }
       })
       .catch((error) => {

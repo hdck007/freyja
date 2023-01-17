@@ -46,7 +46,7 @@ const ListWrapper = ({ setError }) => {
     return itemArray.length;
   }, [itemArray]);
 
-  const handleChange = () => {
+  const handleChange = async () => {
     let newItemArray = [...itemArray];
     const draggedItemContent = newItemArray.splice(sourceItem.current, 1)[0];
     newItemArray.splice(destinationItem.current, 0, draggedItemContent);
@@ -56,6 +56,23 @@ const ListWrapper = ({ setError }) => {
     destinationItem.current = null;
 
     setItemsArray(newItemArray);
+    setLoading(true);
+    const newArray = await fetch("/api/skills/create", {
+      method: "POST",
+      body: JSON.stringify({
+        userId: localStorage.getItem("userId"),
+        skills: [...newItemArray.map((item) => item.name)],
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) =>
+        data.map((item) => ({
+          name: item,
+          id: item,
+        }))
+      );
+    setLoading(false);
+    setItemsArray(newArray);
   };
 
   const handleDragStart = (index: number) => (event) => {
@@ -88,6 +105,7 @@ const ListWrapper = ({ setError }) => {
   const handleRemoveItem = (index) => async () => {
     const newItemArray = [...itemArray];
     newItemArray.splice(index, 1);
+    setItemsArray(newItemArray);
     setLoading(true);
     const newArray = await fetch("/api/skills/create", {
       method: "POST",
