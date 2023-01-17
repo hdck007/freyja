@@ -9,7 +9,7 @@ const IndexPage = () => {
   return (
     <Layout title="Home | Next.js + TypeScript Example">
       {error && (
-        <div className="w-full bg-red-400 rounded-md m-4 transition-all text-white flex justify-between px-4 py-2">
+        <div className="w-[90%] mx-auto bg-red-400 rounded-md m-4 transition-all text-white flex justify-between px-4 py-2">
           An error occured
           <span>X</span>
         </div>

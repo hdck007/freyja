@@ -1,15 +1,6 @@
 import React, { useCallback, useState } from "react";
 import AsyncSelect from "react-select/async";
-
-function debounce(func, timeout = 300) {
-  let timer;
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      func.apply(this, args);
-    }, timeout);
-  };
-}
+import debounce from "../utils/debounce";
 
 function wrapper(callback, inputValue) {
   fetch(
