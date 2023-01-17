@@ -26,24 +26,53 @@ function wrapper(callback, inputValue) {
 }
 
 const AddOptionItem = ({
+  enabled,
   setItemsArray,
+  itemArray,
+  setError,
 }: {
-  setItemsArray: React.Dispatch<React.SetStateAction<{
+  setItemsArray: React.Dispatch<
+    React.SetStateAction<
+      {
+        name: string;
+        id: string;
+      }[]
+    >
+  >;
+  enabled: boolean;
+  itemArray: {
     name: string;
     id: string;
-}[]>>
+  }[];
+  setError: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [showInput, setShowInput] = useState(false);
 
-  const handleChange = (newValue: {
-    value: string,
-    label: string,
-  }) => {
-    setItemsArray(prev => [...prev, {
-      name: newValue.value,
-      id: newValue.value
-    }])
-  }
+  const handleChange = async (newValue: { value: string; label: string }) => {
+    const newArray = await fetch("/api/skills/create", {
+      method: "POST",
+      body: JSON.stringify({
+        userId: localStorage.getItem("userId"),
+        skills: [...itemArray, newValue.value],
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) =>{
+        if(data?.length){
+          return data.map((item) => ({
+            name: item,
+            id: item,
+          }))
+        }else{
+          return []
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(true);
+      });
+    setItemsArray(newArray);
+  };
 
   const handleClick = () => {
     setShowInput(true);
@@ -62,7 +91,12 @@ const AddOptionItem = ({
       <AsyncSelect onChange={handleChange} loadOptions={loadOptions} />
     </div>
   ) : (
-    <div onClick={handleClick} className="bg-blue-200 w-full p-2 m-4">Add skill</div>
+    <div
+      onClick={enabled ? handleClick : () => {}}
+      className="bg-[#007FFA] w-full p-2 m-4 text-white"
+    >
+      Add skill
+    </div>
   );
 };
 

@@ -4,7 +4,7 @@ import Layout from "../components/Layout";
 const AboutPage = () => (
   <Layout title="About | Next.js + TypeScript Example">
     <div className="h-screen w-screen flex justify-center items-center">
-      <div className="w-[450px] border container">
+      <div className="w-full max-w-[450px] sm:w-[450px] border container">
         <div className="big-box">{" "}</div>
         <div className="circle"></div>
         <div className="med-box"></div>

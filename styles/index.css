@@ -4,7 +4,7 @@
 
 .container {
     position: relative;
-    padding-left: 2rem;
+    padding-left: 1rem;
     font-weight: bold;
     line-height: 1.6;
 }
@@ -19,7 +19,7 @@
 
 .hero > span {
     margin: auto;
-    color: blue;
+    color: #007FFA;
     font-size: 10rem;
     font-weight: bold;
     line-height: 0.9;
@@ -57,6 +57,7 @@
     height: 40px;
     transform: rotate(-12deg);
     top: 30%;
+    left: 10%;
     outline: red solid 10px;
 }
 
@@ -97,7 +98,7 @@
     top: 5%;
     left: 20%;
     transform: rotate(-20deg);
-    outline: blue solid 10px;
+    outline: #007FFA solid 10px;
 }
 
 .small-sqaure{
@@ -105,7 +106,29 @@
     height: 5px;
     width: 5px;
     transform: rotate(45deg);
-    background-color: blue;
+    background-color: #007FFA;
     top: 35%;
     right: 25%;
+}
+
+/* media queries for small screens */
+@media (max-width: 640px) {
+    .line1{
+        font-size: 0.8rem;
+    }
+    .line2{
+        font-size: 0.8rem;
+    }
+    .line3{
+        font-size: 0.7rem;
+    }
+    .line4, .line5{
+        font-size: 0.4rem;
+    }
+    .line5 > div{
+        width: 150px;
+    }
+    .big-box{
+        top: 20%;
+    }
 }
