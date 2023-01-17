@@ -11,13 +11,16 @@ const ListWrapper = ({ setError }) => {
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
+    setLoading(true);
     if (!userId) {
       fetch("/api/user/create")
         .then((res) => res.json())
         .then((data) => {
+          setLoading(false);
           localStorage.setItem("userId", data.uuid);
         })
         .catch((error) => {
+          setLoading(false);
           setError(true);
         });
     } else {
@@ -29,6 +32,7 @@ const ListWrapper = ({ setError }) => {
       })
         .then((res) => res.json())
         .then((data) => {
+          setLoading(false);
           const newData = data.map((item) => ({
             name: item.name,
             id: item.uuid,
