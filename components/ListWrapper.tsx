@@ -1,5 +1,23 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import debounce from "../utils/debounce";
 import AddOptionItem from "./AddOptionItem";
+
+async function changeWrapper(newItemArray) {
+  const newArray = await fetch("/api/skills/create", {
+    method: "POST",
+    body: JSON.stringify({
+      userId: localStorage.getItem("userId"),
+      skills: [...newItemArray.map((item) => item.name)],
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) =>
+      data.map((item) => ({
+        name: item,
+        id: item,
+      }))
+    );
+}
 
 const ListWrapper = ({ setError }) => {
   const sourceItem = useRef<null | number>(null);
@@ -56,23 +74,8 @@ const ListWrapper = ({ setError }) => {
     destinationItem.current = null;
 
     setItemsArray(newItemArray);
-    setLoading(true);
-    const newArray = await fetch("/api/skills/create", {
-      method: "POST",
-      body: JSON.stringify({
-        userId: localStorage.getItem("userId"),
-        skills: [...newItemArray.map((item) => item.name)],
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) =>
-        data.map((item) => ({
-          name: item,
-          id: item,
-        }))
-      );
-    setLoading(false);
-    setItemsArray(newArray);
+    const debouncedSave = debounce(changeWrapper, 600);
+    debouncedSave(newItemArray);
   };
 
   const handleDragStart = (index: number) => (event) => {
@@ -122,7 +125,6 @@ const ListWrapper = ({ setError }) => {
         }))
       );
     setLoading(false);
-    setItemsArray(newArray);
   };
 
   const preventDragOver = (event: React.DragEvent<HTMLDivElement>) => {

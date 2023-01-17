@@ -74,7 +74,6 @@ const AddOptionItem = ({
         setError(true);
       });
     setLoading(false);
-    setItemsArray(newArray);
   };
 
   const handleClick = () => {
