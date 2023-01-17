@@ -61,17 +61,17 @@ const ListWrapper = ({ setError }) => {
   const handleDragStart = (index: number) => (event) => {
     console.log("this is", index);
     sourceItem.current = index;
-    (event.target as HTMLDivElement).style.opacity = "0";
+    // (event.target as HTMLDivElement).style.opacity = "0";
   };
 
   const handleDrag = (event) => {
     console.log("yhis");
-    (event.target as HTMLDivElement).style.opacity = "0";
+    // (event.target as HTMLDivElement).style.opacity = "0";
   };
 
   const handleDragEnd = (event: React.DragEvent<HTMLDivElement>) => {
     console.log("drag end called here");
-    (event.target as HTMLDivElement).style.opacity = "100";
+    // (event.target as HTMLDivElement).style.opacity = "100";
     sourceItem.current = null;
     destinationItem.current = null;
   };
