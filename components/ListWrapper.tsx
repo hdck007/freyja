@@ -115,6 +115,12 @@ const ListWrapper = ({ setError }) => {
   const preventDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
   };
+
+  const handleClear = () => {
+    localStorage.removeItem("userId");
+    window.location.reload();
+  };
+
   return (
     <>
       <div className="flex w-2/3 mx-auto justify-around items-center flex-wrap">
@@ -216,6 +222,12 @@ const ListWrapper = ({ setError }) => {
         className="px-4 mx-10 py-2 border border-blue-200 rounded-full"
       >
         Submit
+      </button>
+      <button
+        onClick={handleClear}
+        className="px-4 mx-10 py-2 border border-blue-200 rounded-full"
+      >
+        Clear
       </button>
     </>
   );
